@@ -7,14 +7,14 @@
             <!-- Logo & Sidebar Toggle -->
             <div class="flex items-center space-x-4 flex-shrink-0">
                 <div id="sidebar-toggle-container" class="hidden">
-                    <button id="sidebar-toggle" class="p-2 rounded-lg text-blue-900 hover:text-blue-700 focus:outline-none">
+                <button id="sidebar-toggle" class="p-2 rounded-lg focus:outline-none" style="color: #9C2007;" onmouseover="this.style.color='#8C1C06'" onmouseout="this.style.color='#9C2007'">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
                 </div>
                 <a href="main.html" id="logoLink" class="flex items-center space-x-2">
-                    <img src="https://i.postimg.cc/wv02f1fb/postman-Logo-28.png" alt="Postman logo" class="h-14 w-auto rounded-lg">
+                    <img src="https://i.postimg.cc/x84Pd7jY/laxmi-logo.png" alt="Lakshmi logo" class="h-14 w-auto rounded-lg">
                 </a>
             </div>
 
@@ -31,7 +31,7 @@
             <!-- Global Notification Bell (Visible on ALL devices) -->
             <!-- We added 'id="notification-container-global"' to toggle visibility based on login status -->
             <div class="relative hidden" id="notification-container-global">
-                <button id="notification-button-global" class="p-2 rounded-full text-blue-800 bg-blue-100 hover:bg-blue-200 transition-colors relative focus:outline-none" title="Notifications">
+                <button onclick="window.openComplaintModal()" class="p-2 rounded-full bg-red-100 transition-colors relative focus:outline-none" title="Notifications" style="color: #9C2007;" onmouseover="this.style.backgroundColor='#FEF2F2'" onmouseout="this.style.backgroundColor='#FEF2F2'">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                     </svg>
@@ -53,7 +53,7 @@
 
             <!-- Desktop Only Tools (Refresh, Search, Profile) -->
             <div class="hidden xl:flex items-center space-x-4">
-                <button id="manual-refresh-button" class="p-2 rounded-full text-blue-800 bg-blue-100 hover:bg-blue-200 transition-colors hidden" title="Refresh Data">
+                <button id="manual-refresh-button" class="p-2 rounded-full bg-red-100 transition-colors hidden" title="Refresh Data" style="color: #9C2007;" onmouseover="this.style.backgroundColor='#FEF2F2'" onmouseout="this.style.backgroundColor='#FEF2F2'">
                     <svg id="refresh-icon-static" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
                     </svg>
@@ -63,11 +63,11 @@
                     </svg>
                 </button>
 
-                <a id="nav-search-private" href="search.html" class="p-2 rounded-full text-blue-800 bg-blue-100 hover:bg-blue-200 transition-colors hidden">
+                <a id="nav-search-private" href="search.html" class="p-2 rounded-full bg-red-100 transition-colors hidden" style="color: #9C2007;" onmouseover="this.style.backgroundColor='#FEF2F2'" onmouseout="this.style.backgroundColor='#FEF2F2'">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
                 </a>
                 
-                <a id="login-button" href="login.html" class="px-4 py-2 rounded-lg bg-blue-800 text-white hover:bg-blue-900 transition-colors">Login</a>
+                <a id="login-button" href="login.html" class="px-4 py-2 rounded-lg text-white hover:bg-red-700 transition-colors" style="background-color: #9C2007;">Login</a>
                 
                 <div id="profile-section" class="relative hidden">
                     <button id="profile-button" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-300 transition">
@@ -85,7 +85,7 @@
 
             <!-- Mobile Menu Button -->
             <div class="xl:hidden">
-                <button id="menuButton" class="p-2 rounded-lg text-blue-900 hover:text-blue-700">
+                <button id="menuButton" class="p-2 rounded-lg" style="color: #9C2007;" onmouseover="this.style.color='#8C1C06'" onmouseout="this.style.color='#9C2007'">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                 </button>
             </div>
@@ -109,7 +109,7 @@
             </div>
 
             <div class="mt-2 pt-2 border-t">
-                <a id="login-button-mobile" href="login.html" class="block px-4 py-2 rounded-lg bg-blue-800 text-white hover:bg-blue-900 transition-colors">Login</a>
+                <a id="login-button-mobile" href="login.html" class="block px-4 py-2 rounded-lg text-white hover:bg-red-700 transition-colors" style="background-color: #9C2007;">Login</a>
                 <div id="profile-section-mobile" class="hidden">
                     <div id="mobile-profile-details-container" class="p-2 space-y-1 bg-gray-700 rounded-lg mb-2"></div>
                     <button id="logout-button-mobile" class="w-full text-left px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors">Logout</button>
@@ -291,8 +291,8 @@
             const desktopId = `nav-${item.id}-${type}`;
             const mobileId = `dropdown-${item.id}-${type}`;
 
-            desktopHTML += `<a id="${desktopId}" href="${item.link}" class="px-4 py-2 rounded-lg bg-blue-900 text-white hover:bg-blue-800 transition-colors">${item.label}</a>`;
-            mobileHTML += `<a id="${mobileId}" href="${item.link}" class="block mt-1 px-4 py-2 rounded-lg bg-blue-900 text-white hover:bg-blue-800 transition-colors">${item.label}</a>`;
+            desktopHTML += `<a id="${desktopId}" href="${item.link}" class="px-4 py-2 rounded-lg text-white hover:bg-red-700 transition-colors" style="background-color: #9C2007;">${item.label}</a>`;
+            mobileHTML += `<a id="${mobileId}" href="${item.link}" class="block mt-1 px-4 py-2 rounded-lg text-white hover:bg-red-700 transition-colors" style="background-color: #9C2007;">${item.label}</a>`;
         });
 
         desktopContainer.innerHTML = desktopHTML;

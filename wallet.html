@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Postman - Wallet</title>
+    <title>LCS - Wallet</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
@@ -300,7 +300,7 @@
 
             // Generate UPI string and QR code
             const upiId = '7088551155@upi';
-            const payeeName = 'Postman Wallet';
+            const payeeName = 'LCS Wallet';
             const upiString = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${amount}.00&cu=INR`;
             
             qrCodeContainer.innerHTML = ''; // Clear previous QR code

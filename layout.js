@@ -32,7 +32,7 @@
         link.type = 'image/png';
         document.head.appendChild(link);
     }
-    link.href = 'https://i.postimg.cc/15mmJ7Mq/postman-fevicon.png';
+    link.href = 'https://i.postimg.cc/x84Pd7jY/laxmi-logo.png';
 })();
 
 // ============================================================================
@@ -496,10 +496,12 @@ const setActiveNavOnLoad = () => {
             const linkPage = linkId.split('-')[1]; 
             link.classList.remove('bg-gray-600', 'font-bold');
             if (!link.id.includes('search')) {
-                 link.classList.add('bg-blue-900');
+                 link.classList.add('text-white');
+                 link.style.backgroundColor = '#9C2007';
             }
             if (linkPage === pageId) {
-                link.classList.remove('bg-blue-900');
+                link.style.backgroundColor = '';
+                link.classList.remove('text-white');
                 link.classList.add('bg-gray-600', 'font-bold');
             }
         });
@@ -742,7 +744,7 @@ function checkLoginStatus() {
         populateDetails(document.getElementById('profile-details-container'), false);
         populateDetails(document.getElementById('mobile-profile-details-container'), true);
         const copyright = document.getElementById('copyright-text');
-        if (copyright) copyright.innerHTML = 'Designed & Hardcoded by Arun Tomar with Gemini.';
+        if (copyright) copyright.innerHTML = 'Designed & Hardcoded by Arun Tomar.';
     } else {
         show(['login-button', 'login-button-mobile', 'main-nav-public']);
         // Hide the notification container on logout
