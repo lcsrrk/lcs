@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Logistics Finder</title>
+    <link href="style.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .input-box { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; font-size: 14px; font-weight: 600; color: #374151; }
+        .field-label { font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; margin-bottom: 4px; display: block; }
+        .loader { border: 2px solid #f3f3f3; border-top: 2px solid #3b82f6; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; display: inline-block; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .inr-highlight { border-left: 4px solid #f97316; } /* Orange highlight for INR fields */
+        .usd-highlight { border-left: 4px solid #3b82f6; } /* Blue highlight for USD fields */
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-10 text-center md:text-left">
+            <h1 class="text-3xl font-bold text-gray-900">Logistics Data Entry</h1>
+            <p class="text-gray-500">Global Search with INR Base, USD Global, and RAM calculations.</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            
+            <!-- FROM SECTION -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-lg font-bold text-blue-600 uppercase tracking-tight">Origin (From)</h2>
+                    <div id="fromLoader" class="loader hidden"></div>
+                </div>
+
+                <div class="mb-6 space-y-4">
+                    <div>
+                        <label class="field-label">Enter Zip / Pin Code</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="fromZip" class="input-box border-blue-200 focus:border-blue-500 outline-none" placeholder="e.g. 248001">
+                            <button onclick="fetchLogistics('from')" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-700 transition-colors">Go</button>
+                        </div>
+                    </div>
+
+                    <div id="fromCountryArea" class="hidden">
+                        <label class="field-label text-blue-500 font-bold">Step 1: Select Country</label>
+                        <select id="fromCountryDropdown" onchange="handleCountryChange('from', this.value)" class="input-box bg-blue-50"></select>
+                    </div>
+
+                    <div id="fromCityArea" class="hidden">
+                        <label class="field-label text-blue-500 font-bold">Step 2: Select City / Region</label>
+                        <select id="fromCityDropdown" onchange="applyFinalSelection('from', this.value)" class="input-box bg-blue-50"></select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
+                    <div>
+                        <label class="field-label">Country</label>
+                        <input type="text" id="from-country" class="input-box bg-gray-50" readonly>
+                    </div>
+                    <div>
+                        <label class="field-label">State / Region</label>
+                        <input type="text" id="from-state" class="input-box bg-gray-50" readonly>
+                    </div>
+                    <div>
+                        <label class="field-label">City / Location</label>
+                        <input type="text" id="from-city" class="input-box bg-gray-50" readonly>
+                    </div>
+                    <div>
+                        <label class="field-label">Nearest Port / Hub</label>
+                        <input type="text" id="from-port" class="input-box bg-gray-50" readonly>
+                    </div>
+                    
+                    <!-- New Currency Fields -->
+                    <div class="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-50 p-3 rounded-xl">
+                        <div>
+                            <label class="field-label text-orange-600">Base (INR)</label>
+                            <input type="text" id="from-inr" class="input-box inr-highlight" readonly placeholder="Rate">
+                        </div>
+                        <div>
+                            <label class="field-label text-blue-600">Global (USD)</label>
+                            <input type="text" id="from-usd" class="input-box usd-highlight" readonly placeholder="Rate">
+                        </div>
+                        <div>
+                            <label class="field-label text-purple-600">RAM Currency</label>
+                            <input type="text" id="from-ram" class="input-box border-l-4 border-purple-500" readonly placeholder="RAM Rate">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TO SECTION -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-lg font-bold text-emerald-600 uppercase tracking-tight">Destination (To)</h2>
+                    <div id="toLoader" class="loader hidden"></div>
+                </div>
+
+                <div class="mb-6 space-y-4">
+                    <div>
+                        <label class="field-label">Enter Zip / Pin Code</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="toZip" class="input-box border-emerald-200 focus:border-emerald-500 outline-none" placeholder="e.g. 101000">
+                            <button onclick="fetchLogistics('to')" class="bg-emerald-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-emerald-700 transition-colors">Go</button>
+                        </div>
+                    </div>
+
+                    <div id="toCountryArea" class="hidden">
+                        <label class="field-label text-emerald-500 font-bold">Step 1: Select Country</label>
+                        <select id="toCountryDropdown" onchange="handleCountryChange('to', this.value)" class="input-box bg-emerald-50"></select>
+                    </div>
+
+                    <div id="toCityArea" class="hidden">
+                        <label class="field-label text-emerald-500 font-bold">Step 2: Select City / Region</label>
+                        <select id="toCityDropdown" onchange="applyFinalSelection('to', this.value)" class="input-box bg-emerald-50"></select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
+                    <div>
+                        <label class="field-label">Country</label>
+                        <input type="text" id="to-country" class="input-box bg-gray-50" readonly>
+                    </div>
+                    <div>
+                        <label class="field-label">State / Region</label>
+                        <input type="text" id="to-state" class="input-box bg-gray-50" readonly>
+                    </div>
+                    <div>
+                        <label class="field-label">City / Location</label>
+                        <input type="text" id="to-city" class="input-box bg-gray-50" readonly>
+                    </div>
+                    <div>
+                        <label class="field-label">Nearest Port / Hub</label>
+                        <input type="text" id="to-port" class="input-box bg-gray-50" readonly>
+                    </div>
+
+                    <!-- New Currency Fields -->
+                    <div class="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-50 p-3 rounded-xl">
+                        <div>
+                            <label class="field-label text-orange-600">Base (INR)</label>
+                            <input type="text" id="to-inr" class="input-box inr-highlight" readonly placeholder="Rate">
+                        </div>
+                        <div>
+                            <label class="field-label text-blue-600">Global (USD)</label>
+                            <input type="text" id="to-usd" class="input-box usd-highlight" readonly placeholder="Rate">
+                        </div>
+                        <div>
+                            <label class="field-label text-purple-600">RAM Currency</label>
+                            <input type="text" id="to-ram" class="input-box border-l-4 border-purple-500" readonly placeholder="RAM Rate">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const USERNAME = 'aruntomar';
+        const searchCache = { from: [], to: [] };
+        const countryNamesCache = new Map();
+
+        async function fetchLogistics(side) {
+            const zip = document.getElementById(`${side}Zip`).value.trim().replace(/\s/g, '');
+            if (!zip) return;
+
+            const loader = document.getElementById(`${side}Loader`);
+            const countryArea = document.getElementById(`${side}CountryArea`);
+            const cityArea = document.getElementById(`${side}CityArea`);
+            
+            loader.classList.remove('hidden');
+            countryArea.classList.add('hidden');
+            cityArea.classList.add('hidden');
+
+            try {
+                const urls = [
+                    `https://secure.geonames.org/postalCodeSearchJSON?postalcode=${zip}&maxRows=100&username=${USERNAME}`,
+                    `https://secure.geonames.org/searchJSON?q=${zip}&maxRows=100&username=${USERNAME}`
+                ];
+
+                const responses = await Promise.all(urls.map(url => fetch(url).then(r => r.json())));
+                const merged = [];
+                const seen = new Set();
+
+                const process = (data, isPostal) => {
+                    const items = isPostal ? data.postalCodes : data.geonames;
+                    (items || []).forEach(i => {
+                        const name = isPostal ? i.placeName : i.name;
+                        const country = i.countryCode || '';
+                        if (!name || !country) return;
+                        const key = `${country}-${name}-${i.adminName1 || ''}`.toLowerCase();
+                        if (!seen.has(key)) {
+                            merged.push({ city: name, state: i.adminName1 || '', country, lat: i.lat, lng: i.lng });
+                            seen.add(key);
+                        }
+                    });
+                };
+
+                process(responses[0], true);
+                process(responses[1], false);
+
+                if (merged.length === 0) {
+                    alert("No results found.");
+                    loader.classList.add('hidden');
+                    return;
+                }
+
+                searchCache[side] = merged;
+                const countryCodes = [...new Set(merged.map(l => l.country))].sort();
+
+                const codesToFetch = countryCodes.filter(code => !countryNamesCache.has(code));
+                if (codesToFetch.length > 0) {
+                    const countryData = await Promise.all(
+                        codesToFetch.map(code => 
+                            fetch(`https://restcountries.com/v3.1/alpha/${code}?fields=name`)
+                            .then(r => r.json())
+                            .catch(() => ({ name: { common: code } }))
+                        )
+                    );
+                    countryData.forEach((data, idx) => {
+                        const name = data?.[0]?.name?.common || data?.name?.common || codesToFetch[idx];
+                        countryNamesCache.set(codesToFetch[idx], name);
+                    });
+                }
+
+                if (countryCodes.length > 1) {
+                    countryArea.classList.remove('hidden');
+                    const dropdown = document.getElementById(`${side}CountryDropdown`);
+                    dropdown.innerHTML = `<option value="">-- Select Country --</option>` + 
+                        countryCodes.map(c => `<option value="${c}">${countryNamesCache.get(c)}</option>`).join('');
+                } else {
+                    handleCountryChange(side, countryCodes[0]);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("API Error.");
+            } finally {
+                loader.classList.add('hidden');
+            }
+        }
+
+        function handleCountryChange(side, countryCode) {
+            if (!countryCode) return;
+            const cityArea = document.getElementById(`${side}CityArea`);
+            const cityDropdown = document.getElementById(`${side}CityDropdown`);
+            const filtered = searchCache[side].filter(l => l.country === countryCode);
+            
+            if (filtered.length > 1) {
+                cityArea.classList.remove('hidden');
+                cityDropdown.innerHTML = `<option value="">-- Select City --</option>` + 
+                    filtered.map((l) => {
+                        const originalIdx = searchCache[side].indexOf(l);
+                        return `<option value="${originalIdx}">${l.city} (${l.state || 'N/A'})</option>`;
+                    }).join('');
+            } else if (filtered.length === 1) {
+                cityArea.classList.add('hidden');
+                const originalIdx = searchCache[side].indexOf(filtered[0]);
+                applyFinalSelection(side, originalIdx);
+            }
+        }
+
+        async function applyFinalSelection(side, index) {
+            if (index === "" || index === undefined) return;
+            const loc = searchCache[side][index];
+            const loader = document.getElementById(`${side}Loader`);
+            loader.classList.remove('hidden');
+
+            document.getElementById(`${side}-country`).value = countryNamesCache.get(loc.country) || loc.country;
+            document.getElementById(`${side}-state`).value = loc.state || 'N/A';
+            document.getElementById(`${side}-city`).value = loc.city;
+
+            try {
+                const [cRes, hRes, rRes] = await Promise.all([
+                    fetch(`https://restcountries.com/v3.1/alpha/${loc.country}`).then(r => r.json()),
+                    fetch(`https://secure.geonames.org/findNearbyJSON?lat=${loc.lat}&lng=${loc.lng}&featureCode=AIRP&featureCode=PRT&radius=150&maxRows=1&username=${USERNAME}`).then(r => r.json()),
+                    fetch(`https://open.er-api.com/v6/latest/USD`).then(r => r.json())
+                ]);
+
+                const countryData = cRes[0];
+                const currCode = Object.keys(countryData.currencies)[0];
+                const currency = countryData.currencies[currCode];
+                const hub = hRes.geonames?.[0];
+
+                const rateVsUsd = rRes.rates[currCode];
+                const inrRateVsUsd = rRes.rates['INR'];
+
+                // INR Base logic: Show rate relative to INR
+                // If currCode is INR, value is 1. If not, calculate conversion.
+                const valInInr = (rateVsUsd / inrRateVsUsd).toFixed(4);
+                
+                document.getElementById(`${side}-inr`).value = `1 INR = ${valInInr} ${currCode}`;
+                document.getElementById(`${side}-usd`).value = `1 USD = ${rateVsUsd.toFixed(4)} ${currCode}`;
+                document.getElementById(`${side}-ram`).value = `${currency.symbol} ${rateVsUsd.toFixed(2)} (RAM)`;
+                document.getElementById(`${side}-port`).value = hub ? `${hub.name} (${hub.fcode === 'AIRP' ? 'AIR' : 'SEA'})` : 'No Hub found';
+
+            } catch (err) {
+                console.error(err);
+            } finally {
+                loader.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
