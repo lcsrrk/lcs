@@ -19,7 +19,7 @@
         <div class="container">
             <div class="card w-full">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">Raise a Complaint</h2>
-                
+
                 <div class="space-y-4">
                     <!-- Search for consignment details -->
                     <p class="text-gray-600">First, find your consignment by entering the AWB or Reference Number.</p>
@@ -29,10 +29,10 @@
                             Search
                         </button>
                     </div>
-                    
+
                     <div id="complaintLoadingIndicator" class="hidden text-center text-gray-500"><p>Fetching consignment details...</p></div>
                     <div id="complaintResultsContainer" class="hidden space-y-4"></div>
-                    
+
                     <!-- Complaint Form Fields -->
                     <div id="complaintFormFields" class="space-y-4 pt-4 border-t border-gray-200">
                         <div>
@@ -68,7 +68,7 @@
                         <div id="emailSendingStatus" class="hidden text-sm text-gray-500">Sending...</div>
                     </div>
                 </div>
-                
+
                 <div id="complaintMessageBox" class="hidden p-4 mt-4 bg-red-100 border border-red-400 text-red-700 rounded-lg" role="alert">
                     <p id="complaintMessageText"></p>
                 </div>
@@ -78,7 +78,7 @@
 
     <div id="footer-placeholder"></div>
 
-    <script src="https://post4ex.github.io/postman/layout.js"></script>
+    <script src="layout.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- Complaint Form Logic ---
@@ -114,20 +114,20 @@
                 complaintResultsContainer.innerHTML = '';
                 complaintResultsContainer.classList.add('hidden');
                 complaintMessageBox.classList.add('hidden');
-                
+
                 if (!query) {
                     showComplaintMessage('Please enter a valid AWB/Ref Number.', 'error');
                     return;
                 }
-                
+
                 complaintLoadingIndicator.classList.remove('hidden');
-                
+
                 try {
                     const url = `${API_URL}?searchType=ref&query=${encodeURIComponent(query)}`;
                     const response = await fetch(url);
                     if (!response.ok) throw new Error('Network response was not ok.');
                     const data = await response.json();
-                    
+
                     if (data.orders && data.orders.length > 0) {
                         complaintConsignment = data.orders[0];
                         renderComplaintDetails(complaintConsignment);
@@ -142,7 +142,7 @@
                     complaintLoadingIndicator.classList.add('hidden');
                 }
             }
-            
+
             function renderComplaintDetails(consignment) {
                 const { order } = consignment;
                 const detailsHtml = `<div class="card p-4 bg-gray-50 border border-gray-200"><h3 class="font-semibold text-gray-800 mb-2">Consignment Details</h3>
@@ -153,29 +153,29 @@
                 complaintResultsContainer.innerHTML = detailsHtml;
                 complaintResultsContainer.classList.remove('hidden');
             }
-            
+
             async function sendComplaintEmail() {
                 if (!complaintConsignment) {
                     showComplaintMessage('Please search for and load consignment details first.', 'error');
                     return;
                 }
-                
+
                 const awb = complaintConsignment.order['AWB Booked'] || complaintConsignment.order.Ref;
                 const category = complaintCategory.value;
                 const mobile = complainantMobile.value.trim();
                 const email = complainantEmail.value.trim();
                 const message = complaintMessage.value.trim();
-                
+
                 if (!category || !mobile || !email || !message) {
                     showComplaintMessage('Please fill in all required fields (Category, Mobile, Email, and Message).', 'error');
                     return;
                 }
-                
+
                 emailSendingStatus.classList.remove('hidden');
                 submitComplaintButton.disabled = true;
 
                 const payload = { action: 'sendComplaint', awb: awb, category: category, mobile: mobile, email: email, message: message };
-                
+
                 try {
                     const response = await fetch(API_URL, {
                         method: 'POST',
@@ -196,7 +196,7 @@
                     submitComplaintButton.disabled = false;
                 }
             }
-            
+
             function showComplaintMessage(text, type) {
                 complaintMessageText.textContent = text;
                 complaintMessageBox.classList.remove('hidden');
@@ -207,7 +207,7 @@
                     complaintMessageBox.classList.add('bg-green-100', 'border-green-400', 'text-green-700');
                 }
             }
-            
+
             function clearComplaintForm() {
                 complaintSearchInput.value = '';
                 complaintResultsContainer.innerHTML = '';

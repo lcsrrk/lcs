@@ -34,8 +34,8 @@
         }
         
         .memo-card.urgent { border-left-color: #ef4444; }
-        .memo-card.important { border-left-color: #f59e0b; }
-        .memo-card.informational { border-left-color: #3b82f6; }
+        .memo-card.important { border-left-color: #9C2007; } /* LCS brand color */
+        .memo-card.informational { border-left-color: #ecc92e; }
         .memo-card.update { border-left-color: #10b981; }
         
         /* Priority Badges */
@@ -50,7 +50,7 @@
         
         .priority-urgent { background-color: #fef2f2; color: #dc2626; }
         .priority-high { background-color: #fffbeb; color: #d97706; }
-        .priority-medium { background-color: #eff6ff; color: #2563eb; }
+        .priority-medium { background-color: #fef7f0; color: #9C2007; }
         .priority-low { background-color: #f0fdf4; color: #059669; }
         
         /* Tab Navigation */
@@ -60,17 +60,17 @@
             user-select: none;
             border-bottom: 3px solid transparent;
         }
-        
+
         .tab-button.active {
-            border-bottom-color: #1e3a8a;
-            color: #1e3a8a;
+            border-bottom-color: #9C2007;
+            color: #9C2007;
             font-weight: 700;
         }
         
         /* External News Cards */
         .news-card {
             transition: all 0.3s ease;
-            border-left: 4px solid #3b82f6;
+            border-left: 4px solid #9C2007;
         }
         
         .news-card:hover {
@@ -88,9 +88,9 @@
             cursor: pointer;
             user-select: none;
         }
-        
+
         .filter-pill.active {
-            background-color: #1e3a8a;
+            background-color: #9C2007;
             color: white;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
@@ -117,7 +117,7 @@
         <div class="container mx-auto max-w-6xl space-y-8">
             
             <!-- PAGE HEADER -->
-            <section class="bg-gradient-to-r from-blue-900 to-blue-800 rounded-2xl p-8 text-white">
+            <section class="bg-gradient-to-r from-blue-900 to-blue-800 rounded-2xl p-8 text-white" style="background: linear-gradient(135deg, #9C2007, #8C1C06);">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                     <div>
                         <h1 class="text-3xl font-black mb-2 flex items-center gap-3">
@@ -129,10 +129,10 @@
                             Reply to memos via email for official communication.
                         </p>
                     </div>
-                    
+
                     <div class="flex flex-col items-end">
-                        <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 text-center">
-                            <p class="text-sm opacity-80 mb-1">Active Memos</p>
+                        <div class="bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl p-4 text-center shadow-lg">
+                            <p class="text-sm opacity-90 mb-1">Active Memos</p>
                             <p class="text-3xl font-bold" id="totalMemosCount">--</p>
                         </div>
                     </div>
@@ -167,7 +167,7 @@
                                 </div>
                             </div>
                             
-                            <button id="newMemoBtn" class="px-6 py-3 bg-blue-900 text-white font-bold rounded-lg hover:bg-blue-800 transition-colors hidden">
+                            <button id="newMemoBtn" class="px-6 py-3 bg-red-700 text-white font-bold rounded-lg hover:bg-red-800 transition-colors hidden">
                                 <i class="fa-solid fa-plus mr-2"></i> New Memo
                             </button>
                         </div>
@@ -269,7 +269,7 @@
                             </div>
                             
                             <div class="flex gap-3">
-                                <button type="submit" class="px-6 py-3 bg-blue-900 text-white rounded-lg hover:bg-blue-800 font-semibold">
+                                <button type="submit" class="px-6 py-3 bg-red-700 text-white rounded-lg hover:bg-red-800 font-semibold">
                                     <i class="fa-solid fa-paper-plane mr-2"></i> Publish Memo
                                 </button>
                                 <button type="button" onclick="memosEngine.toggleAdminControls()" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
@@ -338,14 +338,14 @@
                                 </div>
                             </div>
                             
-                            <button onclick="newsEngine.refreshNews()" class="px-6 py-3 bg-green-700 text-white font-bold rounded-lg hover:bg-green-800 transition-colors">
+                            <button onclick="newsEngine.refreshNews()" class="px-6 py-3 bg-red-700 text-white font-bold rounded-lg hover:bg-red-800 transition-colors">
                                 <i class="fa-solid fa-rotate mr-2"></i> Refresh
                             </button>
                         </div>
                         
                         <!-- Source Filter Pills -->
                         <div class="mt-4 flex flex-wrap gap-2">
-                            <button onclick="newsEngine.filterNews('all')" class="filter-pill active px-4 py-2 rounded-full bg-green-700 text-white text-sm font-semibold">
+                            <button onclick="newsEngine.filterNews('all')" class="filter-pill active px-4 py-2 rounded-full bg-red-700 text-white text-sm font-semibold">
                                 All Updates
                             </button>
                             <button onclick="newsEngine.filterNews('gov')" class="filter-pill px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm font-semibold hover:bg-gray-200">
@@ -420,29 +420,29 @@
                 </section>
 
                 <!-- SOURCES INFORMATION -->
-                <div class="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-6">
+                <div class="bg-gradient-to-r from-red-50 to-blue-50 border border-red-200 rounded-xl p-6">
                     <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-info-circle text-green-700"></i>
+                        <i class="fa-solid fa-info-circle text-red-700"></i>
                         About External Updates
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="p-4 bg-white rounded-lg border">
                             <h4 class="font-semibold text-gray-800 mb-2 flex items-center gap-2">
-                                <i class="fa-solid fa-landmark text-green-600"></i>
+                                <i class="fa-solid fa-landmark text-red-600"></i>
                                 Government Sources
                             </h4>
                             <p class="text-sm text-gray-600">Updates from government portals, ministry websites, and official notifications relevant to logistics and trade.</p>
                         </div>
                         <div class="p-4 bg-white rounded-lg border">
                             <h4 class="font-semibold text-gray-800 mb-2 flex items-center gap-2">
-                                <i class="fa-solid fa-industry text-blue-600"></i>
+                                <i class="fa-solid fa-industry text-red-600"></i>
                                 Industry News
                             </h4>
                             <p class="text-sm text-gray-600">Latest developments in shipping, transportation, e-commerce, and supply chain management.</p>
                         </div>
                         <div class="p-4 bg-white rounded-lg border">
                             <h4 class="font-semibold text-gray-800 mb-2 flex items-center gap-2">
-                                <i class="fa-solid fa-truck text-amber-600"></i>
+                                <i class="fa-solid fa-truck text-red-600"></i>
                                 Logistics Updates
                             </h4>
                             <p class="text-sm text-gray-600">Regulatory changes, port updates, customs notifications, and transportation advisories.</p>
@@ -452,7 +452,7 @@
             </div>
 
             <!-- REPLY TO MEMO SECTION (Only on internal tab) -->
-            <div id="replySection" class="bg-gradient-to-r from-blue-50 to-white border border-blue-200 rounded-xl p-6">
+            <div id="replySection" class="bg-gradient-to-r from-red-50 to-white border border-red-200 rounded-xl p-6">
                 <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                     <div>
                         <h3 class="font-bold text-gray-800 mb-2">Need to Respond to a Company Memo?</h3>
@@ -461,13 +461,13 @@
                     
                     <div class="flex flex-col items-end">
                         <p class="text-sm text-gray-600 mb-2">Official reply email:</p>
-                        <code id="officialReplyEmail" class="bg-blue-900 text-white px-4 py-2 rounded-lg font-mono text-sm">
-                            post4ex@gmail.com
+                        <code id="officialReplyEmail" class="bg-red-700 text-white px-4 py-2 rounded-lg font-mono text-sm">
+                            lcsrrk@gmail.com
                         </code>
                     </div>
                 </div>
-                
-                <div class="mt-4 p-4 bg-white border border-blue-100 rounded-lg">
+
+                <div class="mt-4 p-4 bg-white border border-red-100 rounded-lg">
                     <p class="text-sm text-gray-700">
                         <strong>Note:</strong> All memo replies are directed to the official support channel. 
                         The memo reference ID and title are automatically included in the email subject.
@@ -521,7 +521,7 @@
                 <div class="border-t pt-6">
                     <h4 class="font-semibold text-gray-800 mb-3">Actions</h4>
                     <div class="flex flex-wrap gap-3">
-                        <button onclick="memosEngine.replyToCurrentMemo()" class="px-4 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-800 text-sm">
+                        <button onclick="memosEngine.replyToCurrentMemo()" class="px-4 py-2 bg-red-700 text-white rounded-lg hover:bg-red-800 text-sm">
                             <i class="fa-solid fa-reply mr-2"></i> Reply via Email
                         </button>
                         <button onclick="memosEngine.markCurrentAsRead()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 text-sm">
@@ -546,7 +546,7 @@
         // ============================================================================
         // MEMOS DATA ENGINE
         // ============================================================================
-        const SUPPORT_EMAIL = 'post4ex@gmail.com';
+        const SUPPORT_EMAIL = 'lcsrrk@gmail.com';
         
         class MemosEngine {
             constructor() {
