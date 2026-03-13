@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Dev Server",
+      "type": "shell",
+      "command": "python3 -m http.server 8000",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Deploy Backend",
+      "type": "shell",
+      "command": "cd gas-backend && clasp push && clasp deploy -i AKfycbwQpFOm5EPYPKWpImEHRowtjoCKAgs5AgyAuqVQoOAcze8SzDgXeqzV1UCRz0bRadu5zQ",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "Deploy to HF Spaces",
+      "type": "shell",
+      "command": "cd hf-deployment && ./deploy-hf.sh",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.root": "/",
+  "liveServer.settings.CustomBrowser": "chrome",
+  "files.exclude": {
+    "**/.git": true,
+    ".credentials": true,
+    "gas-backend": true,
+    "hf-deployment": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/*.min.js": true,
+    "gas-backend/**": true,
+    "hf-deployment/**": true
+  },
+  "files.associations": {
+    "*.html": "html",
+    "*.js": "javascript"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
